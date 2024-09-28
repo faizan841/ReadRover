@@ -114,7 +114,7 @@ export default function BrowseResults() {
       let response;
       if (action === "currentlyReading") {
         const addBookResponse = await axios.post(
-          "http://localhost:5000/api/books",
+          "https://readrover-backend.onrender.com/api/books",
           {
             googleBooksId: book.id,
             title: book.volumeInfo.title,
@@ -129,7 +129,7 @@ export default function BrowseResults() {
 
         if (addBookResponse.status === 201) {
           response = await axios.put(
-            `http://localhost:5000/api/books/${addBookResponse.data.book._id}/reading`,
+            `https://readrover-backend.onrender.com/api/books/${addBookResponse.data.book._id}/reading`,
             {},
             {
               headers: { "x-auth-token": localStorage.getItem("token") },
@@ -140,7 +140,7 @@ export default function BrowseResults() {
         }
       } else {
         response = await axios.post(
-          "http://localhost:5000/api/books",
+          "https://readrover-backend.onrender.com/api/books",
           {
             googleBooksId: book.id,
             title: book.volumeInfo.title,

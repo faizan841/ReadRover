@@ -14,7 +14,7 @@ export default function AddFriend({ onFriendAdded }) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/users/add-friend/${friendUsername}`,
+        `https://readrover-backend.onrender.com/api/users/add-friend/${friendUsername}`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );

@@ -36,9 +36,12 @@ export default function Bookshelf() {
   const fetchBooks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5000/api/books", {
-        headers: { "x-auth-token": localStorage.getItem("token") },
-      });
+      const response = await axios.get(
+        "https://readrover-backend.onrender.com/api/books",
+        {
+          headers: { "x-auth-token": localStorage.getItem("token") },
+        }
+      );
       console.log("Fetched books:", response.data);
       setBooks(response.data.books || []);
     } catch (error) {
@@ -77,7 +80,7 @@ export default function Bookshelf() {
   const handleSaveReview = async () => {
     try {
       await axios.post(
-        `http://localhost:5000/api/books/${selectedBook._id}/reviews`,
+        `https://readrover-backend.onrender.com/api/books/${selectedBook._id}/reviews`,
         { content: review, rating },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -93,7 +96,7 @@ export default function Bookshelf() {
   const handleMarkAsReading = async (book) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/books/${book._id}/reading`,
+        `https://readrover-backend.onrender.com/api/books/${book._id}/reading`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -139,7 +142,7 @@ export default function Bookshelf() {
   const handleRemoveFromReading = async (book) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/books/${book._id}/not-reading`,
+        `https://readrover-backend.onrender.com/api/books/${book._id}/not-reading`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -156,9 +159,12 @@ export default function Bookshelf() {
 
   const handleDeleteBook = async (bookId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/books/${bookId}`, {
-        headers: { "x-auth-token": localStorage.getItem("token") },
-      });
+      await axios.delete(
+        `https://readrover-backend.onrender.com/api/books/${bookId}`,
+        {
+          headers: { "x-auth-token": localStorage.getItem("token") },
+        }
+      );
       showSnackbar("Book deleted successfully", "success");
       fetchBooks();
     } catch (error) {

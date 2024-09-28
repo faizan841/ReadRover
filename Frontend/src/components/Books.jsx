@@ -23,9 +23,12 @@ export default function Books() {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/books", {
-        headers: { "x-auth-token": localStorage.getItem("token") },
-      });
+      const response = await axios.get(
+        "https://readrover-backend.onrender.com/api/books",
+        {
+          headers: { "x-auth-token": localStorage.getItem("token") },
+        }
+      );
       console.log(response);
       setBooks(response.data.books || []);
       setLoading(false);

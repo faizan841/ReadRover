@@ -40,7 +40,7 @@ export default function ReviewBook() {
         }
 
         const response = await axios.get(
-          `http://localhost:5000/api/books/${bookId}`,
+          `https://readrover-backend.onrender.com/api/books/${bookId}`,
           {
             headers: { "x-auth-token": token },
           }
@@ -69,7 +69,7 @@ export default function ReviewBook() {
       }
 
       await axios.put(
-        `http://localhost:5000/api/books/${bookId}`,
+        `https://readrover-backend.onrender.com/api/books/${bookId}`,
         {
           review,
           rating,

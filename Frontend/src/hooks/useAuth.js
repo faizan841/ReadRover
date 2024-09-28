@@ -10,9 +10,12 @@ export function useAuth() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/user", {
-          headers: { "x-auth-token": token },
-        });
+        const res = await axios.get(
+          "https://readrover-backend.onrender.com/api/auth/user",
+          {
+            headers: { "x-auth-token": token },
+          }
+        );
         setIsAuthenticated(true);
         setUser(res.data);
       } catch (err) {
@@ -34,10 +37,13 @@ export function useAuth() {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "https://readrover-backend.onrender.com/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
       localStorage.setItem("token", res.data.token);
       await checkAuth(); // This will set isAuthenticated and user
     } catch (err) {

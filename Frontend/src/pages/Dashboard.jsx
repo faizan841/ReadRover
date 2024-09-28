@@ -37,7 +37,7 @@ export default function Dashboard() {
   const handleUpdateActivityVisibility = useCallback(async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/users/update-activity-visibility",
+        "https://readrover-backend.onrender.com/api/users/update-activity-visibility",
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -50,7 +50,7 @@ export default function Dashboard() {
   const fetchFriendFeed = useCallback(async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/users/friend-feed",
+        "https://readrover-backend.onrender.com/api/users/friend-feed",
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }
@@ -67,15 +67,24 @@ export default function Dashboard() {
     try {
       const [currentlyReadingRes, friendFeedRes, challengeRes] =
         await Promise.all([
-          axios.get("http://localhost:5000/api/books/currently-reading", {
-            headers: { "x-auth-token": localStorage.getItem("token") },
-          }),
-          axios.get("http://localhost:5000/api/users/friend-feed", {
-            headers: { "x-auth-token": localStorage.getItem("token") },
-          }),
-          axios.get("http://localhost:5000/api/users/reading-challenge", {
-            headers: { "x-auth-token": localStorage.getItem("token") },
-          }),
+          axios.get(
+            "https://readrover-backend.onrender.com/api/books/currently-reading",
+            {
+              headers: { "x-auth-token": localStorage.getItem("token") },
+            }
+          ),
+          axios.get(
+            "https://readrover-backend.onrender.com/api/users/friend-feed",
+            {
+              headers: { "x-auth-token": localStorage.getItem("token") },
+            }
+          ),
+          axios.get(
+            "https://readrover-backend.onrender.com/api/users/reading-challenge",
+            {
+              headers: { "x-auth-token": localStorage.getItem("token") },
+            }
+          ),
         ]);
       setCurrentlyReading(currentlyReadingRes.data || []);
       setFriendFeed(friendFeedRes.data || []);
@@ -125,7 +134,7 @@ export default function Dashboard() {
   const handleSaveProgress = async (bookId, progress, pagesRead) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/books/${bookId}/progress`,
+        `https://readrover-backend.onrender.com/api/books/${bookId}/progress`,
         { progress, pagesRead },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -149,7 +158,7 @@ export default function Dashboard() {
   const handleFinishBook = async (bookId) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/books/${bookId}/finish`,
+        `https://readrover-backend.onrender.com/api/books/${bookId}/finish`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );

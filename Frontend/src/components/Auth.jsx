@@ -31,11 +31,14 @@ export default function Auth() {
         await login(email, password);
         navigate("/dashboard");
       } else {
-        await axios.post("http://localhost:5000/api/auth/register", {
-          username,
-          email,
-          password,
-        });
+        await axios.post(
+          "https://readrover-backend.onrender.com/api/auth/register",
+          {
+            username,
+            email,
+            password,
+          }
+        );
         await login(email, password);
         navigate("/dashboard");
       }

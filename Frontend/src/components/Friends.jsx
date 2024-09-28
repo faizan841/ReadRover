@@ -47,7 +47,7 @@ export default function Friends() {
   const fetchFriendRequests = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/users/friend-requests",
+        "https://readrover-backend.onrender.com/api/users/friend-requests",
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }
@@ -60,9 +60,12 @@ export default function Friends() {
 
   const fetchFriends = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/users/friends", {
-        headers: { "x-auth-token": localStorage.getItem("token") },
-      });
+      const res = await axios.get(
+        "https://readrover-backend.onrender.com/api/users/friends",
+        {
+          headers: { "x-auth-token": localStorage.getItem("token") },
+        }
+      );
       setFriends(res.data);
     } catch (error) {
       console.error("Error fetching friends:", error);
@@ -73,7 +76,7 @@ export default function Friends() {
     e.preventDefault();
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/users/search?query=${searchQuery}`,
+        `https://readrover-backend.onrender.com/api/users/search?query=${searchQuery}`,
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }
@@ -87,7 +90,7 @@ export default function Friends() {
   const sendFriendRequest = async (userId) => {
     try {
       await axios.post(
-        `http://localhost:5000/api/users/friend-request/${userId}`,
+        `https://readrover-backend.onrender.com/api/users/friend-request/${userId}`,
         {},
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
@@ -107,7 +110,7 @@ export default function Friends() {
   const acceptFriendRequest = async (userId) => {
     try {
       await axios.post(
-        `http://localhost:5000/api/users/accept-friend-request/${userId}`,
+        `https://readrover-backend.onrender.com/api/users/accept-friend-request/${userId}`,
         {},
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
