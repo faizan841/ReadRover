@@ -41,5 +41,11 @@ app.use("/api/books", require("./routes/books"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/activities", require("./routes/activities"));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+const PORT = process.env.PORT || 5001 || 4000 || 8080 || 8000;
+app.listen(PORT, "0.0.0.0", () =>
+  console.log(`Server running on port ${PORT}`)
+);
