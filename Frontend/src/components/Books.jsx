@@ -24,7 +24,7 @@ export default function Books() {
   const fetchBooks = async () => {
     try {
       const response = await axios.get(
-        "https://readrover-backend.onrender.com/api/books",
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books`,
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }

@@ -37,7 +37,7 @@ export default function Bookshelf() {
     try {
       setLoading(true);
       const response = await axios.get(
-        "https://readrover-backend.onrender.com/api/books",
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books`,
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }
@@ -80,7 +80,9 @@ export default function Bookshelf() {
   const handleSaveReview = async () => {
     try {
       await axios.post(
-        `https://readrover-backend.onrender.com/api/books/${selectedBook._id}/reviews`,
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${
+          selectedBook._id
+        }/reviews`,
         { content: review, rating },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -96,7 +98,9 @@ export default function Bookshelf() {
   const handleMarkAsReading = async (book) => {
     try {
       const response = await axios.put(
-        `https://readrover-backend.onrender.com/api/books/${book._id}/reading`,
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${
+          book._id
+        }/reading`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -142,7 +146,9 @@ export default function Bookshelf() {
   const handleRemoveFromReading = async (book) => {
     try {
       await axios.put(
-        `https://readrover-backend.onrender.com/api/books/${book._id}/not-reading`,
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${
+          book._id
+        }/not-reading`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -160,7 +166,7 @@ export default function Bookshelf() {
   const handleDeleteBook = async (bookId) => {
     try {
       await axios.delete(
-        `https://readrover-backend.onrender.com/api/books/${bookId}`,
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${bookId}`,
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }

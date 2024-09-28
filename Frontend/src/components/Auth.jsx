@@ -32,7 +32,7 @@ export default function Auth() {
         navigate("/dashboard");
       } else {
         await axios.post(
-          "https://readrover-backend.onrender.com/api/auth/register",
+          `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/auth/register`,
           {
             username,
             email,

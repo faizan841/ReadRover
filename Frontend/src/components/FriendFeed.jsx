@@ -68,7 +68,9 @@ export default function FriendFeed({ activities, onActivityUpdate }) {
   const handleCommentSubmit = async (activityId) => {
     try {
       const response = await axios.post(
-        `https://readrover-backend.onrender.com/api/activities/${activityId}/comments`,
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/activities/${activityId}/comments`,
         { content: comments[activityId] },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -84,7 +86,9 @@ export default function FriendFeed({ activities, onActivityUpdate }) {
   const handleReplySubmit = async (activityId, commentId) => {
     try {
       const response = await axios.post(
-        `https://readrover-backend.onrender.com/api/activities/${activityId}/comments/${commentId}/replies`,
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/activities/${activityId}/comments/${commentId}/replies`,
         { content: replies[commentId] },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );

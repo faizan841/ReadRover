@@ -47,7 +47,7 @@ export default function Friends() {
   const fetchFriendRequests = async () => {
     try {
       const res = await axios.get(
-        "https://readrover-backend.onrender.com/api/users/friend-requests",
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/users/friend-requests`,
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }
@@ -61,7 +61,7 @@ export default function Friends() {
   const fetchFriends = async () => {
     try {
       const res = await axios.get(
-        "https://readrover-backend.onrender.com/api/users/friends",
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/users/friends`,
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }
@@ -76,7 +76,9 @@ export default function Friends() {
     e.preventDefault();
     try {
       const res = await axios.get(
-        `https://readrover-backend.onrender.com/api/users/search?query=${searchQuery}`,
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/users/search?query=${searchQuery}`,
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }
@@ -90,7 +92,9 @@ export default function Friends() {
   const sendFriendRequest = async (userId) => {
     try {
       await axios.post(
-        `https://readrover-backend.onrender.com/api/users/friend-request/${userId}`,
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/users/friend-request/${userId}`,
         {},
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
@@ -110,7 +114,9 @@ export default function Friends() {
   const acceptFriendRequest = async (userId) => {
     try {
       await axios.post(
-        `https://readrover-backend.onrender.com/api/users/accept-friend-request/${userId}`,
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/users/accept-friend-request/${userId}`,
         {},
         {
           headers: { "x-auth-token": localStorage.getItem("token") },

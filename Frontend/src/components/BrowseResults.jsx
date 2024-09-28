@@ -114,7 +114,7 @@ export default function BrowseResults() {
       let response;
       if (action === "currentlyReading") {
         const addBookResponse = await axios.post(
-          "https://readrover-backend.onrender.com/api/books",
+          `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books`,
           {
             googleBooksId: book.id,
             title: book.volumeInfo.title,
@@ -129,7 +129,9 @@ export default function BrowseResults() {
 
         if (addBookResponse.status === 201) {
           response = await axios.put(
-            `https://readrover-backend.onrender.com/api/books/${addBookResponse.data.book._id}/reading`,
+            `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${
+              addBookResponse.data.book._id
+            }/reading`,
             {},
             {
               headers: { "x-auth-token": localStorage.getItem("token") },
@@ -140,7 +142,9 @@ export default function BrowseResults() {
         }
       } else {
         response = await axios.post(
-          "https://readrover-backend.onrender.com/api/books",
+          `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/books`,
           {
             googleBooksId: book.id,
             title: book.volumeInfo.title,

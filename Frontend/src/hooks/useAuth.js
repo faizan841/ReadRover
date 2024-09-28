@@ -11,7 +11,7 @@ export function useAuth() {
     if (token) {
       try {
         const res = await axios.get(
-          "https://readrover-backend.onrender.com/api/auth/user",
+          `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/auth/user`,
           {
             headers: { "x-auth-token": token },
           }
@@ -38,7 +38,7 @@ export function useAuth() {
   const login = async (email, password) => {
     try {
       const res = await axios.post(
-        "https://readrover-backend.onrender.com/api/auth/login",
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/auth/login`,
         {
           email,
           password,

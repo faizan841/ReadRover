@@ -37,7 +37,9 @@ export default function Dashboard() {
   const handleUpdateActivityVisibility = useCallback(async () => {
     try {
       await axios.post(
-        "https://readrover-backend.onrender.com/api/users/update-activity-visibility",
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/users/update-activity-visibility`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -50,7 +52,7 @@ export default function Dashboard() {
   const fetchFriendFeed = useCallback(async () => {
     try {
       const response = await axios.get(
-        "https://readrover-backend.onrender.com/api/users/friend-feed",
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/users/friend-feed`,
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
         }
@@ -68,19 +70,23 @@ export default function Dashboard() {
       const [currentlyReadingRes, friendFeedRes, challengeRes] =
         await Promise.all([
           axios.get(
-            "https://readrover-backend.onrender.com/api/books/currently-reading",
+            `${
+              import.meta.env.VITE_REACT_APP_BASE_URL
+            }/api/books/currently-reading`,
             {
               headers: { "x-auth-token": localStorage.getItem("token") },
             }
           ),
           axios.get(
-            "https://readrover-backend.onrender.com/api/users/friend-feed",
+            `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/users/friend-feed`,
             {
               headers: { "x-auth-token": localStorage.getItem("token") },
             }
           ),
           axios.get(
-            "https://readrover-backend.onrender.com/api/users/reading-challenge",
+            `${
+              import.meta.env.VITE_REACT_APP_BASE_URL
+            }/api/users/reading-challenge`,
             {
               headers: { "x-auth-token": localStorage.getItem("token") },
             }
@@ -134,7 +140,9 @@ export default function Dashboard() {
   const handleSaveProgress = async (bookId, progress, pagesRead) => {
     try {
       await axios.put(
-        `https://readrover-backend.onrender.com/api/books/${bookId}/progress`,
+        `${
+          import.meta.env.VITE_REACT_APP_BASE_URL
+        }/api/books/${bookId}/progress`,
         { progress, pagesRead },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -158,7 +166,7 @@ export default function Dashboard() {
   const handleFinishBook = async (bookId) => {
     try {
       await axios.put(
-        `https://readrover-backend.onrender.com/api/books/${bookId}/finish`,
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${bookId}/finish`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
