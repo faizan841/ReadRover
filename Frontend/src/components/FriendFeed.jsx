@@ -45,6 +45,17 @@ const getActivityIcon = (type) => {
   }
 };
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
+console.log("API Base URL:", API_BASE_URL);
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export default function FriendFeed({ activities, onActivityUpdate }) {
   const [comments, setComments] = useState({});
   const [replies, setReplies] = useState({});
@@ -67,10 +78,8 @@ export default function FriendFeed({ activities, onActivityUpdate }) {
 
   const handleCommentSubmit = async (activityId) => {
     try {
-      const response = await axios.post(
-        `${
-          import.meta.env.VITE_REACT_APP_BASE_URL
-        }/api/activities/${activityId}/comments`,
+      const response = await api.post(
+        `/api/activities/${activityId}/comments`,
         { content: comments[activityId] },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -85,10 +94,8 @@ export default function FriendFeed({ activities, onActivityUpdate }) {
 
   const handleReplySubmit = async (activityId, commentId) => {
     try {
-      const response = await axios.post(
-        `${
-          import.meta.env.VITE_REACT_APP_BASE_URL
-        }/api/activities/${activityId}/comments/${commentId}/replies`,
+      const response = await api.post(
+        `/api/activities/${activityId}/comments/${commentId}/replies`,
         { content: replies[commentId] },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );

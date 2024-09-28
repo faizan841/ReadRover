@@ -23,6 +23,16 @@ import {
 import { motion } from "framer-motion";
 import { Book, ArrowBack } from "@mui/icons-material";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
+console.log("API Base URL:", API_BASE_URL);
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 const floatAnimation = keyframes`
   0% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -113,8 +123,8 @@ export default function BrowseResults() {
     try {
       let response;
       if (action === "currentlyReading") {
-        const addBookResponse = await axios.post(
-          `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books`,
+        const addBookResponse = await api.post(
+          `/api/books`,
           {
             googleBooksId: book.id,
             title: book.volumeInfo.title,
@@ -128,10 +138,8 @@ export default function BrowseResults() {
         );
 
         if (addBookResponse.status === 201) {
-          response = await axios.put(
-            `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${
-              addBookResponse.data.book._id
-            }/reading`,
+          response = await api.put(
+            `/api/books/${addBookResponse.data.book._id}/reading`,
             {},
             {
               headers: { "x-auth-token": localStorage.getItem("token") },
@@ -141,10 +149,8 @@ export default function BrowseResults() {
           throw new Error("Failed to add book to bookshelf");
         }
       } else {
-        response = await axios.post(
-          `${
-          import.meta.env.VITE_REACT_APP_BASE_URL
-        }/api/books`,
+        response = await api.post(
+          `/api/books`,
           {
             googleBooksId: book.id,
             title: book.volumeInfo.title,

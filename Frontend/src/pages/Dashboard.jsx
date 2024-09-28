@@ -19,6 +19,17 @@ const CurrentlyReading = React.lazy(() =>
 const FriendFeed = React.lazy(() => import("../components/FriendFeed"));
 const ProgressDialog = React.lazy(() => import("../components/ProgressDialog"));
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
+console.log("API Base URL:", API_BASE_URL);
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export default function Dashboard() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -38,12 +49,12 @@ export default function Dashboard() {
 
   const handleUpdateActivityVisibility = useCallback(async () => {
     try {
-      await axios.post(
-        `${
-          import.meta.env.VITE_REACT_APP_BASE_URL
-        }/api/users/update-activity-visibility`,
+      await api.post(
+        "/api/users/update-activity-visibility",
         {},
-        { headers: { "x-auth-token": localStorage.getItem("token") } }
+        {
+          headers: { "x-auth-token": localStorage.getItem("token") },
+        }
       );
       console.log("Activity visibility updated successfully");
     } catch (error) {
@@ -53,12 +64,9 @@ export default function Dashboard() {
 
   const fetchFriendFeed = useCallback(async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/users/friend-feed`,
-        {
-          headers: { "x-auth-token": localStorage.getItem("token") },
-        }
-      );
+      const response = await api.get("/api/users/friend-feed", {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      });
       setFriendFeed(response.data || []);
     } catch (error) {
       console.error("Error fetching friend feed:", error);
@@ -71,28 +79,15 @@ export default function Dashboard() {
     try {
       const [currentlyReadingRes, friendFeedRes, challengeRes] =
         await Promise.all([
-          axios.get(
-            `${
-              import.meta.env.VITE_REACT_APP_BASE_URL
-            }/api/books/currently-reading`,
-            {
-              headers: { "x-auth-token": localStorage.getItem("token") },
-            }
-          ),
-          axios.get(
-            `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/users/friend-feed`,
-            {
-              headers: { "x-auth-token": localStorage.getItem("token") },
-            }
-          ),
-          axios.get(
-            `${
-              import.meta.env.VITE_REACT_APP_BASE_URL
-            }/api/users/reading-challenge`,
-            {
-              headers: { "x-auth-token": localStorage.getItem("token") },
-            }
-          ),
+          api.get("/api/books/currently-reading", {
+            headers: { "x-auth-token": localStorage.getItem("token") },
+          }),
+          api.get("/api/users/friend-feed", {
+            headers: { "x-auth-token": localStorage.getItem("token") },
+          }),
+          api.get("/api/users/reading-challenge", {
+            headers: { "x-auth-token": localStorage.getItem("token") },
+          }),
         ]);
       setCurrentlyReading(currentlyReadingRes.data || []);
       setFriendFeed(friendFeedRes.data || []);
@@ -141,10 +136,8 @@ export default function Dashboard() {
 
   const handleSaveProgress = async (bookId, progress, pagesRead) => {
     try {
-      await axios.put(
-        `${
-          import.meta.env.VITE_REACT_APP_BASE_URL
-        }/api/books/${bookId}/progress`,
+      await api.put(
+        `/api/books/${bookId}/progress`,
         { progress, pagesRead },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -167,8 +160,8 @@ export default function Dashboard() {
 
   const handleFinishBook = async (bookId) => {
     try {
-      await axios.put(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${bookId}/finish`,
+      await api.put(
+        `/api/books/${bookId}/finish`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );

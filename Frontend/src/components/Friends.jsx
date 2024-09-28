@@ -32,6 +32,17 @@ function TabPanel(props) {
   );
 }
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
+console.log("API Base URL:", API_BASE_URL);
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export default function Friends() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -46,12 +57,9 @@ export default function Friends() {
 
   const fetchFriendRequests = async () => {
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/users/friend-requests`,
-        {
-          headers: { "x-auth-token": localStorage.getItem("token") },
-        }
-      );
+      const res = await api.get(`/api/users/friend-requests`, {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      });
       setFriendRequests(res.data);
     } catch (error) {
       console.error("Error fetching friend requests:", error);
@@ -60,12 +68,9 @@ export default function Friends() {
 
   const fetchFriends = async () => {
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/users/friends`,
-        {
-          headers: { "x-auth-token": localStorage.getItem("token") },
-        }
-      );
+      const res = await api.get(`/api/users/friends`, {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      });
       setFriends(res.data);
     } catch (error) {
       console.error("Error fetching friends:", error);
@@ -75,14 +80,9 @@ export default function Friends() {
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get(
-        `${
-          import.meta.env.VITE_REACT_APP_BASE_URL
-        }/api/users/search?query=${searchQuery}`,
-        {
-          headers: { "x-auth-token": localStorage.getItem("token") },
-        }
-      );
+      const res = await api.get(`/api/users/search?query=${searchQuery}`, {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      });
       setSearchResults(res.data);
     } catch (error) {
       console.error("Error searching users:", error);
@@ -91,10 +91,8 @@ export default function Friends() {
 
   const sendFriendRequest = async (userId) => {
     try {
-      await axios.post(
-        `${
-          import.meta.env.VITE_REACT_APP_BASE_URL
-        }/api/users/friend-request/${userId}`,
+      await api.post(
+        `/api/users/friend-request/${userId}`,
         {},
         {
           headers: { "x-auth-token": localStorage.getItem("token") },
@@ -113,10 +111,8 @@ export default function Friends() {
 
   const acceptFriendRequest = async (userId) => {
     try {
-      await axios.post(
-        `${
-          import.meta.env.VITE_REACT_APP_BASE_URL
-        }/api/users/accept-friend-request/${userId}`,
+      await api.post(
+        `/api/users/accept-friend-request/${userId}`,
         {},
         {
           headers: { "x-auth-token": localStorage.getItem("token") },

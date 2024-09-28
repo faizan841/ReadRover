@@ -2,6 +2,17 @@ import React, { useState } from "react";
 import { TextField, Button, Box, Typography, Snackbar } from "@mui/material";
 import axios from "axios";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
+console.log("API Base URL:", API_BASE_URL);
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export default function AddFriend({ onFriendAdded }) {
   const [friendUsername, setFriendUsername] = useState("");
   const [snackbar, setSnackbar] = useState({
@@ -13,10 +24,8 @@ export default function AddFriend({ onFriendAdded }) {
   const handleAddFriend = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${
-          import.meta.env.VITE_REACT_APP_BASE_URL
-        }/api/users/add-friend/${friendUsername}`,
+      const response = await api.post(
+        `/api/users/add-friend/${friendUsername}`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );

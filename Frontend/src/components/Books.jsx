@@ -12,6 +12,17 @@ import {
 } from "@mui/material";
 import NavBar from "./NavBar";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
+console.log("API Base URL:", API_BASE_URL);
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export default function Books() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,12 +34,9 @@ export default function Books() {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books`,
-        {
-          headers: { "x-auth-token": localStorage.getItem("token") },
-        }
-      );
+      const response = await api.get(`/api/books`, {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      });
       console.log(response);
       setBooks(response.data.books || []);
       setLoading(false);

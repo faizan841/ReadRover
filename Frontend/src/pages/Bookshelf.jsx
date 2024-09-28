@@ -16,6 +16,17 @@ import {
 import axios from "axios";
 import BookshelfTable from "../components/BookshelfTable";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
+console.log("API Base URL:", API_BASE_URL);
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export default function Bookshelf() {
   const [books, setBooks] = useState([]);
   const [openReviewDialog, setOpenReviewDialog] = useState(false);
@@ -36,12 +47,9 @@ export default function Bookshelf() {
   const fetchBooks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books`,
-        {
-          headers: { "x-auth-token": localStorage.getItem("token") },
-        }
-      );
+      const response = await api.get(`/api/books`, {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      });
       console.log("Fetched books:", response.data);
       setBooks(response.data.books || []);
     } catch (error) {
@@ -79,10 +87,8 @@ export default function Bookshelf() {
 
   const handleSaveReview = async () => {
     try {
-      await axios.post(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${
-          selectedBook._id
-        }/reviews`,
+      await api.post(
+        `/api/books/${selectedBook._id}/reviews`,
         { content: review, rating },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -97,10 +103,8 @@ export default function Bookshelf() {
 
   const handleMarkAsReading = async (book) => {
     try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${
-          book._id
-        }/reading`,
+      const response = await api.put(
+        `/api/books/${book._id}/reading`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -145,10 +149,8 @@ export default function Bookshelf() {
 
   const handleRemoveFromReading = async (book) => {
     try {
-      await axios.put(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${
-          book._id
-        }/not-reading`,
+      await api.put(
+        `/api/books/${book._id}/not-reading`,
         {},
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
@@ -165,12 +167,9 @@ export default function Bookshelf() {
 
   const handleDeleteBook = async (bookId) => {
     try {
-      await axios.delete(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${bookId}`,
-        {
-          headers: { "x-auth-token": localStorage.getItem("token") },
-        }
-      );
+      await api.delete(`/api/books/${bookId}`, {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      });
       showSnackbar("Book deleted successfully", "success");
       fetchBooks();
     } catch (error) {

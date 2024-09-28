@@ -12,6 +12,17 @@ import {
   CircularProgress,
 } from "@mui/material";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
+console.log("API Base URL:", API_BASE_URL);
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,14 +42,11 @@ export default function Auth() {
         await login(email, password);
         navigate("/dashboard");
       } else {
-        await axios.post(
-          `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/auth/register`,
-          {
-            username,
-            email,
-            password,
-          }
-        );
+        await api.post(`/api/auth/register`, {
+          username,
+          email,
+          password,
+        });
         await login(email, password);
         navigate("/dashboard");
       }
