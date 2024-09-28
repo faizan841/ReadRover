@@ -5,9 +5,15 @@ require("dotenv").config();
 
 const app = express();
 
+const corsOptions = {
+  origin: "https://readrover.onrender.com", // Replace with your frontend URL
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true, // Allow credentials (like cookies, authorization headers)
+};
+
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Connect to MongoDB
 mongoose
