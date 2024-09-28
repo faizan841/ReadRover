@@ -13,9 +13,11 @@ import {
   Paper,
   useTheme,
 } from "@mui/material";
-import CurrentlyReading from "../components/CurrentlyReading";
-import FriendFeed from "../components/FriendFeed";
-import ProgressDialog from "../components/ProgressDialog";
+const CurrentlyReading = React.lazy(() =>
+  import("../components/CurrentlyReading")
+);
+const FriendFeed = React.lazy(() => import("../components/FriendFeed"));
+const ProgressDialog = React.lazy(() => import("../components/ProgressDialog"));
 
 export default function Dashboard() {
   const { user, loading: authLoading } = useAuth();
@@ -260,12 +262,14 @@ export default function Dashboard() {
         </Grid>
       </Box>
 
-      <ProgressDialog
-        open={openProgressDialog}
-        onClose={handleCloseProgressDialog}
-        book={selectedBook}
-        onSave={handleSaveProgress}
-      />
+      <React.Suspense fallback={<CircularProgress />}>
+        <ProgressDialog
+          open={openProgressDialog}
+          onClose={handleCloseProgressDialog}
+          book={selectedBook}
+          onSave={handleSaveProgress}
+        />
+      </React.Suspense>
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}

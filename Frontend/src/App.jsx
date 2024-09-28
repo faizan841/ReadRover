@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,15 +11,17 @@ import { CircularProgress, Box } from "@mui/material";
 
 import Auth from "./components/Auth";
 import { useAuth } from "./hooks/useAuth";
-import Dashboard from "./pages/Dashboard";
-import BrowseResults from "./components/BrowseResults";
-import Bookshelf from "./pages/Bookshelf";
-import ReviewBook from "./pages/ReviewBook";
-import Books from "./components/Books";
-import BookDetail from "./components/BookDetail";
-import Friends from "./components/Friends";
 import NavBar from "./components/NavBar";
 import createAppTheme from "./theme";
+
+// Lazy load components
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const BrowseResults = lazy(() => import("./components/BrowseResults"));
+const Bookshelf = lazy(() => import("./pages/Bookshelf"));
+const ReviewBook = lazy(() => import("./pages/ReviewBook"));
+const Books = lazy(() => import("./components/Books"));
+const BookDetail = lazy(() => import("./components/BookDetail"));
+const Friends = lazy(() => import("./components/Friends"));
 
 function PrivateRoute({ children }) {
   const { isAuthenticated, loading } = useAuth();
@@ -44,7 +46,7 @@ function Layout({ children, toggleColorMode }) {
   return (
     <>
       <NavBar toggleColorMode={toggleColorMode} />
-      {children}
+      <Suspense fallback={<CircularProgress />}>{children}</Suspense>
     </>
   );
 }
@@ -163,7 +165,7 @@ export default function App() {
               </PrivateRoute>
             }
           />
-          <Route
+           <Route
             path="/"
             element={
               <Navigate to={isAuthenticated ? "/dashboard" : "/login"} />
