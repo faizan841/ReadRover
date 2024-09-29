@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -44,6 +45,14 @@ app.use("/api/activities", require("./routes/activities"));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
+});
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "client", "build")));
+
+// Fallback route for React client-side routing
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
 const PORT = process.env.PORT;
