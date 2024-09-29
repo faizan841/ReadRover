@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import api from "../api";
 import axios from "axios";
 import {
   Box,
@@ -10,17 +11,6 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-
-const API_BASE_URL =
-  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
-console.log("API Base URL:", API_BASE_URL);
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 export default function Books() {
   const [books, setBooks] = useState([]);

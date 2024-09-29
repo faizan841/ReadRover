@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import {
   Box,
   Typography,
@@ -39,12 +39,9 @@ export default function ReviewBook() {
           throw new Error("No authentication token found");
         }
 
-        const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${bookId}`,
-          {
-            headers: { "x-auth-token": token },
-          }
-        );
+        const response = await api.get(`/api/books/${bookId}`, {
+          headers: { "x-auth-token": token },
+        });
         setBook(response.data);
         setLoading(false);
       } catch (error) {
@@ -68,8 +65,8 @@ export default function ReviewBook() {
         throw new Error("No authentication token found");
       }
 
-      await axios.put(
-        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/books/${bookId}`,
+      await api.put(
+        `/api/books/${bookId}`,
         {
           review,
           rating,

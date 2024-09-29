@@ -13,19 +13,8 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import axios from "axios";
+import api from "../api";
 import BookshelfTable from "../components/BookshelfTable";
-
-const API_BASE_URL =
-  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
-console.log("API Base URL:", API_BASE_URL);
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 export default function Bookshelf() {
   const [books, setBooks] = useState([]);

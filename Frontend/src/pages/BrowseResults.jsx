@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../api";
 import {
   Typography,
   Grid,
@@ -22,16 +23,6 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { Book, ArrowBack } from "@mui/icons-material";
-
-const API_BASE_URL =
-  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
-console.log("API Base URL:", API_BASE_URL);
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 const floatAnimation = keyframes`
   0% { transform: translateY(0px); }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 import { motion } from "framer-motion";
 import { BookOpen, Feather, Users, TrendingUp } from "lucide-react";
 import {
@@ -20,16 +20,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { styled } from "@mui/system";
-
-const API_BASE_URL =
-  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 const GradientBackground = styled(Box)(({ theme }) => ({
   minHeight: "100vh",

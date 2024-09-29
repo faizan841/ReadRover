@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import { useAuth } from "../hooks/useAuth";
 import {
   Typography,
@@ -18,17 +18,6 @@ const CurrentlyReading = React.lazy(() =>
 );
 const FriendFeed = React.lazy(() => import("../components/FriendFeed"));
 const ProgressDialog = React.lazy(() => import("../components/ProgressDialog"));
-
-const API_BASE_URL =
-  import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
-console.log("API Base URL:", API_BASE_URL);
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 export default function Dashboard() {
   const { user, loading: authLoading } = useAuth();
