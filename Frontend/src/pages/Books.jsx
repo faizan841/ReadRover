@@ -10,7 +10,6 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import NavBar from "./NavBar";
 
 const API_BASE_URL =
   import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:5000";
@@ -79,7 +78,6 @@ export default function Books() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <NavBar />
       <Typography variant="h4" gutterBottom>
         All Books
       </Typography>

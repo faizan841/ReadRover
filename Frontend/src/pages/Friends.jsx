@@ -14,7 +14,6 @@ import {
   Tabs,
 } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
-import NavBar from "./NavBar";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

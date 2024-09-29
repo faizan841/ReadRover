@@ -9,19 +9,18 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CircularProgress, Box } from "@mui/material";
 
-import Auth from "./components/Auth";
+import Auth from "./pages/Auth";
 import { useAuth } from "./hooks/useAuth";
 import NavBar from "./components/NavBar";
 import createAppTheme from "./theme";
 
 // Lazy load components
 const Dashboard = lazy(() => import("./pages/Dashboard"));
-const BrowseResults = lazy(() => import("./components/BrowseResults"));
+const BrowseResults = lazy(() => import("./pages/BrowseResults"));
 const Bookshelf = lazy(() => import("./pages/Bookshelf"));
 const ReviewBook = lazy(() => import("./pages/ReviewBook"));
-const Books = lazy(() => import("./components/Books"));
-const BookDetail = lazy(() => import("./components/BookDetail"));
-const Friends = lazy(() => import("./components/Friends"));
+const BookDetail = lazy(() => import("./pages/BookDetail"));
+const Friends = lazy(() => import("./pages/Friends"));
 
 function PrivateRoute({ children }) {
   const { isAuthenticated, loading } = useAuth();
@@ -135,16 +134,7 @@ export default function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/books"
-            element={
-              <PrivateRoute>
-                <Layout toggleColorMode={colorMode.toggleColorMode}>
-                  <Books />
-                </Layout>
-              </PrivateRoute>
-            }
-          />
+
           <Route
             path="/book/:bookId"
             element={
@@ -165,7 +155,7 @@ export default function App() {
               </PrivateRoute>
             }
           />
-           <Route
+          <Route
             path="/"
             element={
               <Navigate to={isAuthenticated ? "/dashboard" : "/login"} />
