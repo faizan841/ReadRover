@@ -51,7 +51,8 @@ export default function BookDetail() {
   const fetchBookData = async () => {
     setLoading(true);
     try {
-      const googleBooksApiUrl = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
+      // Appending the key parameter using your Vite environment variable
+      const googleBooksApiUrl = `https://www.googleapis.com/books/v1/volumes/${bookId}?key=${import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`;
       const googleBookRes = await axios.get(googleBooksApiUrl);
 
       if (googleBookRes.data) {
@@ -147,7 +148,7 @@ export default function BookDetail() {
               <BookInfoChip
                 icon={<CalendarTodayIcon />}
                 label={`Published: ${new Date(
-                  book.publishedDate
+                  book.publishedDate,
                 ).toLocaleDateString()}`}
               />
               <BookInfoChip

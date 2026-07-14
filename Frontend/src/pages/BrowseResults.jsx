@@ -91,15 +91,16 @@ export default function BrowseResults() {
     const fetchSearchResults = async () => {
       setLoading(true);
       try {
+        // Appending the key query parameter to authenticate the request
         const response = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`
+          `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=${import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`,
         );
         setSearchResults(response.data.items || []);
       } catch (error) {
         console.error("Error fetching search results:", error);
         showSnackbar(
           "Error fetching search results. Please try again.",
-          "error"
+          "error",
         );
       }
       setLoading(false);
@@ -125,7 +126,7 @@ export default function BrowseResults() {
           },
           {
             headers: { "x-auth-token": localStorage.getItem("token") },
-          }
+          },
         );
 
         if (addBookResponse.status === 201) {
@@ -134,7 +135,7 @@ export default function BrowseResults() {
             {},
             {
               headers: { "x-auth-token": localStorage.getItem("token") },
-            }
+            },
           );
         } else {
           throw new Error("Failed to add book to bookshelf");
@@ -151,7 +152,7 @@ export default function BrowseResults() {
           },
           {
             headers: { "x-auth-token": localStorage.getItem("token") },
-          }
+          },
         );
       }
 
@@ -163,8 +164,8 @@ export default function BrowseResults() {
         showSnackbar(message, "success");
         setSearchResults((prevResults) =>
           prevResults.map((item) =>
-            item.id === book.id ? { ...item, addedToBookshelf: true } : item
-          )
+            item.id === book.id ? { ...item, addedToBookshelf: true } : item,
+          ),
         );
       }
     } catch (error) {
